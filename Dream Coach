@@ -2,11 +2,28 @@
 <html lang="en">
 <head>
      <meta charset="UTF-8">
-	 <title>Dream Coach</title>
-	 <link rel="stylesheet" href="Name.css">
-	 <!-- <script src="Name.js" defer></script> -->
+	 <title> Dream </title>
+	 <!--<link rel="stylesheet" href="Name.css">-->
 	 </head>
 	 <body>
-	 <body bgcolor="white">	
+	 	 <!-- Здесь всё -->
+	  <!-- Бегущая строка новостей -->
+	     <marquee>Месси переходит в Зенит!
+	     Роналду переходит в Спартак!</marquee>
+	  <!--Ползунок для регулировки параметров-->
+	    <input type="range" min="0" max="10"  value="5" id="ball_possesion">	 
+	  <label for="ball_possesion">владение мячом</label>
+	  <!--Кнопка начала матча-->
+	    <input type="button"  value="Начать матч" OnClick="start();"  id="start_game">
+		
+	  <!--Кнопка завершения матча-->
+	    <input type="button"  value="Завершить матч" OnClick="stop();"  id="stop_game">
+	  
+	  <!--Кнопка остановки матча-->
+	    <input type="button"  value="Остановить матч" OnClick="on_pause();"  id="pause_game">
+	  
+   <body bgcolor="white">	
+	 
+	<script src="Dream Coach.js" defer></script> 
 	 </body>
 	 </html>	
