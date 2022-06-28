@@ -7,8 +7,12 @@ var pressing = 5; // прессинг
 var t = 0; // параметр времени матча
 var array = []; // массив, куда записывается значения отклонений нашего зн-я и точного
 var id; // таймер
-
+var level = 0.7; //уровень сложности
 /* считывание значения параметров с ползунков */
+document.getElementById('difficulty level').oninput = function(){
+	 level= this.value;
+}
+
 document.getElementById('ball_possesion').oninput = function(){
 	ball_possesion = this.value;
 }
@@ -84,14 +88,15 @@ function compare(){
 	else if(t % 30 == 0 && t != 0 ){
 	    let av = average(array);
 		array = [];
-		if (av>0.5){
+		if (av>level){
 			console.log("Пропускаем");
 		}
-		else if(av == 0.5){
+		else if(av == level){
 		    console.log("Ничего не произошло");
 		}
 		else{
 		    console.log("Забиваем");
+			
 		}
 	}
     t++;
