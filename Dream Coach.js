@@ -53,12 +53,12 @@ function  average(arr)
 
 /*функция с параметрами команды соперника*/
 function test_team(t){
-	let pace_exact = 5;
-	let counter_attack_exact = 0;
-	let long_short_pass_exact = 5;
-	let ball_possesion_exact = 5;
+	let pace_exact = 6;
+	let counter_attack_exact = 1;
+	let long_short_pass_exact = 8;
+	let ball_possesion_exact = 7;
 	let long_short_shot_exact = 5;
-	let pressing_exact = 5;
+	let pressing_exact = 8;
 	return pace_exact + counter_attack_exact * t 
 		 + long_short_pass_exact * (t ** 2) + ball_possesion_exact * (t**3) 
 		 + long_short_shot_exact * (t**4) + pressing_exact * (t**5);
@@ -80,6 +80,7 @@ function compare(){
 	     let num = 	Number(pace) + counter_attack * t 
 		 + long_short_pass * (t ** 2) + ball_possesion* (t**3) 
 		 + long_short_shot * (t**4) + pressing* (t**5);
+		 
 		 let error = Math.abs(exact - num) / exact;
 	     array.push(error);
 		 
