@@ -36,7 +36,10 @@ document.getElementById('long_short_shot').oninput = function(){
 document.getElementById('pressing').oninput = function(){
 	pressing = this.value;
 }
-
+/*функция рандом*/
+function getRandomArrayElement(arr){
+   return arr[Math.floor(Math.random()*arr.length)]
+}
 
 /*функция расчёта среднего значения*/
 function  average(arr)
@@ -52,16 +55,14 @@ function  average(arr)
 /*функция расчёта среднего значения*/
 
 /*функция с параметрами команды соперника*/
-function test_team(t){
+function test_team(){
 	let pace_exact = 6;
 	let counter_attack_exact = 1;
 	let long_short_pass_exact = 8;
 	let ball_possesion_exact = 7;
 	let long_short_shot_exact = 5;
 	let pressing_exact = 8;
-	return pace_exact + counter_attack_exact * t 
-		 + long_short_pass_exact * (t ** 2) + ball_possesion_exact * (t**3) 
-		 + long_short_shot_exact * (t**4) + pressing_exact * (t**5);
+	return [pace_exact, counter_attack_exact,long_short_pass_exact, ball_possesion_exact, long_short_shot_exact, pressing_exact];
 }
 /*функция с параметрами команды соперника*/
 
@@ -72,30 +73,31 @@ function compare(){
 	    array = [];
 	}
 	console.log(array);
-    if(t == 240){
+    if(t == 241){
 		clearInterval(id);
 	}
 	else if(t % 30 != 0){
-		 let exact = test_team(t);
-	     let num = 	Number(pace) + counter_attack * t 
-		 + long_short_pass * (t ** 2) + ball_possesion* (t**3) 
-		 + long_short_shot * (t**4) + pressing* (t**5);
-		 
-		 let error = Math.abs(exact - num) / exact;
-	     array.push(error);
-		 
-		 error = 0;
+		 let exact_arr = test_team();
+	     let num_arr = 	[Number(pace),Number(counter_attack),Number(long_short_pass),Number(ball_possesion),Number(long_short_shot),Number(pressing)];
+		 let error = [0.6,0.5,0.4,0.3,0.2,0.1]
+		 for (var i = 0; i < error.length; i++) {
+              if ((Math.abs(exact_arr[i] - num_arr[i]) / exact_arr[i]) < error[i] ){
+				  array.push(3)
+			  }
+			  else if ((Math.abs(exact_arr[i] - num_arr[i]) / exact_arr[i]) <= (error[i] + 0.3) && (Math.abs(exact_arr[i] - num_arr[i]) / exact_arr[i]) >= (error[i] - 0.3) ){array.push(2);}
+			  else{array.push(1);}
+         }		 
 	}
 	else if(t % 30 == 0 && t != 0 ){
-	    let av = average(array);
+		let rand = getRandomArrayElement(array);
 		array = [];
-		if (av>level){
+		if (rand == 1 ){
 			console.log("Пропускаем");
 		}
-		else if(av == level){
+		else if(rand == 2){
 		    console.log("Ничего не произошло");
 		}
-		else{
+		else if (rand == 3){
 		    console.log("Забиваем");
 			
 		}
