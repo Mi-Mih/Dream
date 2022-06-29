@@ -8,6 +8,8 @@ var t = 0; // параметр времени матча
 var array = []; // массив, куда записывается значения отклонений нашего зн-я и точного
 var id; // таймер
 var level = 0.7; //уровень сложности
+var our_score = 0; // забитые мячи нашей команды
+var opponent_score = 0; // забитые мячи команды соперника
 /* считывание значения параметров с ползунков */
 document.getElementById('difficulty level').oninput = function(){
 	 level= this.value;
@@ -76,6 +78,8 @@ function compare(){
 	}
 	console.log(array);
     if(t == 241){
+		our_score = 0;
+		opponent_score = 0;
 		clearInterval(id);
 	}
 	else if(t % 30 != 0){
@@ -95,13 +99,16 @@ function compare(){
 		array = [];
 		if (rand == 1 ){
 			console.log("Пропускаем");
+			opponent_score = opponent_score + 1;
+			document.getElementById("scored").innerHTML ='Наша команда ' + our_score + ':' + opponent_score + ' Команда противника';
 		}
 		else if(rand == 2){
 		    console.log("Ничего не произошло");
 		}
 		else if (rand == 3){
 		    console.log("Забиваем");
-			
+			our_score = our_score + 1;
+			document.getElementById("scored").innerHTML = 'Наша команда ' + our_score + ':' + opponent_score + ' Команда противника';
 		}
 	}
     t++;
