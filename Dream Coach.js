@@ -36,10 +36,12 @@ document.getElementById('long_short_shot').oninput = function(){
 document.getElementById('pressing').oninput = function(){
 	pressing = this.value;
 }
+
 /*функция рандом*/
 function getRandomArrayElement(arr){
    return arr[Math.floor(Math.random()*arr.length)]
 }
+/*функция рандом*/
 
 /*функция расчёта среднего значения*/
 function  average(arr)
@@ -62,7 +64,7 @@ function test_team(){
 	let ball_possesion_exact = 7;
 	let long_short_shot_exact = 5;
 	let pressing_exact = 8;
-	return [pace_exact, counter_attack_exact,long_short_pass_exact, ball_possesion_exact, long_short_shot_exact, pressing_exact];
+	return [counter_attack_exact, long_short_shot_exact, pace_exact, long_short_pass_exact, ball_possesion_exact, pressing_exact];
 }
 /*функция с параметрами команды соперника*/
 
@@ -78,8 +80,8 @@ function compare(){
 	}
 	else if(t % 30 != 0){
 		 let exact_arr = test_team();
-	     let num_arr = 	[Number(pace),Number(counter_attack),Number(long_short_pass),Number(ball_possesion),Number(long_short_shot),Number(pressing)];
-		 let error = [0.6,0.5,0.4,0.3,0.2,0.1]
+	     let num_arr = 	[Number(counter_attack), Number(long_short_shot), Number(pace),Number(long_short_pass),Number(ball_possesion),Number(pressing)];
+		 let error = [(0.7 - level),(0.6 - level),(0.5 - level),(0.4 - level),(0.3 - level),(0.3 - level)]
 		 for (var i = 0; i < error.length; i++) {
               if ((Math.abs(exact_arr[i] - num_arr[i]) / exact_arr[i]) < error[i] ){
 				  array.push(3)
