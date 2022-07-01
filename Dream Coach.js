@@ -87,9 +87,9 @@ function compare(){
 	}
 	else if(t % 30 != 0){
 		 let exact_arr = test_team();
-	         let num_arr = 	[Number(counter_attack), Number(long_short_shot), Number(pace),Number(long_short_pass),Number(ball_possesion),Number(pressing)];
-		 let error = [(0.7 - level- (our_rating - opponent_rating)),(0.6 - level- (our_rating - opponent_rating)),(0.5 - level - (our_rating - opponent_rating)),
-		 (0.4 - level - (our_rating - opponent_rating)),(0.3 - level - (our_rating - opponent_rating)),(0.3 - level - (our_rating - opponent_rating))];
+	     let num_arr = 	[Number(counter_attack), Number(long_short_shot), Number(pace),Number(long_short_pass),Number(ball_possesion),Number(pressing)];
+		 let error = [(0.7 - level- ((our_rating - opponent_rating)/50)),(0.6 - level- ((our_rating - opponent_rating)/50)),(0.5 - level - ((our_rating - opponent_rating)/50)),
+		 (0.4 - level - ((our_rating - opponent_rating)/50)),(0.3 - level - ((our_rating - opponent_rating)/50)),(0.3 - level - ((our_rating - opponent_rating)/50))];
 		 for (var i = 0; i < error.length; i++) {
               if ((Math.abs(exact_arr[i] - num_arr[i]) / exact_arr[i]) < error[i] ){
 				  array.push(3)
