@@ -10,6 +10,9 @@ var id; // таймер
 var level = 0.1; //уровень сложности
 var our_score = 0; // забитые мячи нашей команды
 var opponent_score = 0; // забитые мячи команды соперника
+var our_rating = 5; //рейтинг нашей команды 0-10
+var opponent_rating = 5; //рейтинг команды соперника 0-10
+
 /* считывание значения параметров с ползунков */
 document.getElementById('difficulty level').oninput = function(){
 	 level= this.value;
