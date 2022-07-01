@@ -124,6 +124,7 @@ function start(){
 /*функция завершения матча*/
 function stop(){
 	clearInterval(id);
+	console.log('Техническое поражение');
 	t=0;
 	array = [];
 }
