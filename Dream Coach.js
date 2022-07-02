@@ -10,8 +10,6 @@ var id; // таймер
 var level = 0.1; //уровень сложности
 var our_score = 0; // забитые мячи нашей команды
 var opponent_score = 0; // забитые мячи команды соперника
-var our_rating = 5; //рейтинг нашей команды 0-10
-var opponent_rating = 5; //рейтинг команды соперника 0-10
 
 /* считывание значения параметров с ползунков */
 document.getElementById('difficulty level').oninput = function(){
@@ -60,6 +58,53 @@ function  average(arr)
     return sum / arr.length;
 }
 /*функция расчёта среднего значения*/
+
+/*Возможные команды соперника*/
+var Liverpool = {
+    'Salah': 7.54 ,
+	'Mane': 7.29,
+	'Firmino': 6.85,
+	'Henderson': 6.86,
+	'Tiago':7.10,
+	'Fabinho': 7.0,
+	'Robertson': 7.23,
+	'Van Djk': 7.18,
+	'Matip':7.35,
+	'Trent-Aleksandr-Arnold': 7.51,
+	'Alisson': 6.87 
+};
+/*Возможные команды соперника*/
+
+/*Наша команда*/
+var Based = {
+    'Felino': 5.4,
+	'Boba': 5.8,
+	'MM': 6.85,
+	'Van Ge Gol': 5.7,
+	'Goslin':5.2,
+	'Lind': 5.1,
+	'Ger': 6.2,
+	'Lover': 5.3,
+	'Mitchell': 5.5,
+	'Pope': 6.54,
+	'Forster': 5.0 
+};
+/*Наша команда*/
+
+/*функция расчёта рейтинга команды*/
+function calc_rate(name){
+	  var dict = eval(name);
+	  rate_arr = [];
+	  for(var key in dict) {
+      rate_arr.push(dict[key]);
+} 	
+ return average(rate_arr);
+}
+/*функция расчёта рейтинга команды*/
+
+
+var our_rating = calc_rate(Based); //рейтинг нашей команды 0-10
+var opponent_rating;//рейтинг команды соперника 0-10
 
 /*функция с параметрами команды соперника*/
 function test_team(){
@@ -118,15 +163,26 @@ function compare(){
     t++;
 }
 /*функция сравнения параметров введённых пользователем и эталонных*/
-
+var numb = 0; // костыль, чтоб нельзя было менять оппонента по ходу матча
 /*функция запуска матча*/
 function start(){
-	id = setInterval(compare, 1000); 
+    numb++;
+	if (numb == 1){ // если 1, то оппонент выбирается впервые
+	var opponent_team = document.getElementById("Opponent_team");
+    var opponent = opponent_team.value;
+	opponent_rating = calc_rate(opponent);
+	id = setInterval(compare, 1000);
+	}
+else { //иначе оппонент уже выбран
+	id = setInterval(compare, 1000);
+}
+	
 }
 /*функция запуска матча*/
 
 /*функция завершения матча*/
 function stop(){
+	numb = 0; // сброс оппонента
 	clearInterval(id);
 	console.log('Техническое поражение');
 	t=0;
