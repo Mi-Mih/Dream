@@ -26,7 +26,7 @@
 	  <label for="long_short_pass">длинные/короткие пассы</label>
 	  <br>
 	  <input type="range" min="0" max="10"  value="5" id="long_short_shot">	 
-	  <label for="long_short_shot">длинные/короткие удары</label>
+	  <label for="long_short_shot">дальние/ближние удары</label>
 	  <br>
 	  <input type="range" min="0" max="10"  value="5" id="pressing">	 
 	  <label for="pressing">прессинг</label>
@@ -42,6 +42,13 @@
 	  
 	  <!--Кнопка остановки матча-->
 	    <input type="button"  value="Пауза" OnClick="on_pause();"  id="pause_game">
+	  
+	  	  <!--Выбор соперника-->
+	  <select id="Opponent_team">
+			<option value = "Liverpool">Ливерпуль</option>
+			<option value = "Based" selected>База</option>
+		</select>
+	  
 	  
    <body bgcolor="white">	
 	 
