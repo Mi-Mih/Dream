@@ -71,7 +71,9 @@ var Liverpool = {
 	'Van Djk': 7.18,
 	'Matip':7.35,
 	'Trent-Aleksandr-Arnold': 7.51,
-	'Alisson': 6.87 
+	'Alisson': 6.87,
+	'counter_attack_exact' : 1, 'long_short_shot_exact' : 3 , 'pace_exact' : 8, 'long_short_pass_exact' : 4, 'ball_possesion_exact' : 4, 'pressing_exact' : 7
+
 };
 /*Возможные команды соперника*/
 
@@ -87,7 +89,9 @@ var Based = {
 	'Lover': 5.3,
 	'Mitchell': 5.5,
 	'Pope': 6.54,
-	'Forster': 5.0 
+	'Forster': 5.0,
+	'counter_attack_exact' : 1, 'long_short_shot_exact' : 5 , 'pace_exact' : 5, 'long_short_pass_exact' : 5, 'ball_possesion_exact' : 5, 'pressing_exact' : 5
+
 };
 /*Наша команда*/
 
@@ -96,6 +100,10 @@ function calc_rate(name){
 	  var dict = eval(name);
 	  rate_arr = [];
 	  for(var key in dict) {
+         if (key == 'counter_attack_exact' || key == 'long_short_shot_exact' || key == 'pace_exact' 
+         || key == 'long_short_pass_exact' || key == 'ball_possesion_exact' || key == 'pressing_exact'){
+			  continue;
+		  }
       rate_arr.push(dict[key]);
 } 	
  return average(rate_arr);
@@ -105,15 +113,10 @@ function calc_rate(name){
 
 var our_rating = calc_rate(Based); //рейтинг нашей команды 0-10
 var opponent_rating;//рейтинг команды соперника 0-10
+var exact_arr;
 
 /*функция с параметрами команды соперника*/
-function test_team(){
-	let pace_exact = 6;
-	let counter_attack_exact = 1;
-	let long_short_pass_exact = 8;
-	let ball_possesion_exact = 7;
-	let long_short_shot_exact = 5;
-	let pressing_exact = 8;
+function test_team(counter_attack_exact, long_short_shot_exact, pace_exact, long_short_pass_exact, ball_possesion_exact, pressing_exact){
 	return [counter_attack_exact, long_short_shot_exact, pace_exact, long_short_pass_exact, ball_possesion_exact, pressing_exact];
 }
 /*функция с параметрами команды соперника*/
@@ -131,7 +134,7 @@ function compare(){
 		clearInterval(id);
 	}
 	else if(t % 30 != 0){
-		 let exact_arr = test_team();
+		 //let exact_arr = test_team();
 	     let num_arr = 	[Number(counter_attack), Number(long_short_shot), Number(pace),Number(long_short_pass),Number(ball_possesion),Number(pressing)];
 		 let error = [(0.7 - level- ((our_rating - opponent_rating)/50)),(0.6 - level- ((our_rating - opponent_rating)/50)),(0.5 - level - ((our_rating - opponent_rating)/50)),
 		 (0.4 - level - ((our_rating - opponent_rating)/50)),(0.3 - level - ((our_rating - opponent_rating)/50)),(0.3 - level - ((our_rating - opponent_rating)/50))];
@@ -170,7 +173,12 @@ function start(){
 	if (numb == 1){ // если 1, то оппонент выбирается впервые
 	var opponent_team = document.getElementById("Opponent_team");
     var opponent = opponent_team.value;
+	
 	opponent_rating = calc_rate(opponent);
+	console.log(eval(opponent)['counter_attack_exact']);
+	
+	exact_arr = test_team(eval(opponent)['counter_attack_exact'], eval(opponent)['long_short_shot_exact'],eval(opponent)['pace_exact'],
+	eval(opponent)['long_short_pass_exact'], eval(opponent)['ball_possesion_exact'], eval(opponent)['pressing_exact']);
 	id = setInterval(compare, 1000);
 	}
 else { //иначе оппонент уже выбран
