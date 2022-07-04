@@ -205,6 +205,7 @@ function test_team(counter_attack_exact, long_short_shot_exact, pace_exact, long
 	return [counter_attack_exact, long_short_shot_exact, pace_exact, long_short_pass_exact, ball_possesion_exact, pressing_exact];
 }
 /*функция с параметрами команды соперника*/
+var numb = 0; // костыль, чтоб нельзя было менять оппонента по ходу матча
 
 /*функция сравнения параметров введённых пользователем и эталонных*/
 function compare(){
@@ -215,7 +216,10 @@ function compare(){
 	console.log(array);
     if(t == 241){
 		our_score = 0;
+		array = [];
+		t = 0;
 		opponent_score = 0;
+		numb = 0;
 		clearInterval(id);
 	}
 	else if(t % 30 != 0){
@@ -251,7 +255,6 @@ function compare(){
     t++;
 }
 /*функция сравнения параметров введённых пользователем и эталонных*/
-var numb = 0; // костыль, чтоб нельзя было менять оппонента по ходу матча
 /*функция запуска матча*/
 function start(){
     numb++;
