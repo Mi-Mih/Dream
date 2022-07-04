@@ -61,19 +61,104 @@ function  average(arr)
 
 /*Возможные команды соперника*/
 var Liverpool = {
-    'Salah': 7.54 ,
+    'Salah': 7.7 ,
 	'Mane': 7.29,
-	'Firmino': 6.85,
+	'Jota': 7.3,
 	'Henderson': 6.86,
-	'Tiago':7.10,
+	'Tiago':7.30,
 	'Fabinho': 7.0,
 	'Robertson': 7.23,
 	'Van Djk': 7.18,
 	'Matip':7.35,
 	'Trent-Aleksandr-Arnold': 7.51,
 	'Alisson': 6.87,
-	'counter_attack_exact' : 1, 'long_short_shot_exact' : 3 , 'pace_exact' : 8, 'long_short_pass_exact' : 4, 'ball_possesion_exact' : 4, 'pressing_exact' : 7
+	'counter_attack_exact' : 0, 'long_short_shot_exact' : 3 , 'pace_exact' : 7, 'long_short_pass_exact' : 4, 'ball_possesion_exact' : 6, 'pressing_exact' : 8
 
+};
+
+var Arsenal = {
+	'Saka': 7.2,
+	'Martinelli': 7.1,
+	'Nketiah': 6.60,
+	'Thomas Partey': 7.1,
+	'Ødegaard':6.9,
+	'Smith Rowe': 6.74,
+	'Tierny': 6.7,
+	'Gabriel Magalhães': 6.6,
+	'White':6.6,
+	'Soares': 6.7,
+	'Ramsdale': 6.3,
+	'counter_attack_exact' : 0, 'long_short_shot_exact' : 6 , 'pace_exact' : 6, 'long_short_pass_exact' : 7, 'ball_possesion_exact' : 7, 'pressing_exact' : 7
+
+	
+};
+
+var Chelsea = {
+	'Werner': 6.81,
+	'Havertz': 7.5,
+	'Mount': 7.6,
+	'Alonso':7.2,
+	'Kante': 7.2,
+	'Jorginho':7.04,
+	'Chalobah': 7.1,
+	'Tiago Silva':7.2,
+	'Rudiger': 7.2,
+	'James': 7.7,
+	'Mendy': 6.7,
+	'counter_attack_exact' : 1, 'long_short_shot_exact' : 4 , 'pace_exact' : 7, 'long_short_pass_exact' : 4, 'ball_possesion_exact' : 7, 'pressing_exact' : 7
+
+	
+};
+
+var Manchester_City = {
+	'Jesus': 7.8,
+	'Grealish': 7.9,
+	'Mahrez': 8,
+	'De Bryne':8.4,
+	'Silva': 7.3,
+	'Rodri':7.5,
+	'Walker': 7.7,
+	'Laporte':6.9,
+	'Dias': 7.1,
+	'Cancelo': 7.7,
+	'Ederson': 6.8,
+	'counter_attack_exact' : 1, 'long_short_shot_exact' : 3 , 'pace_exact' : 8, 'long_short_pass_exact' : 7, 'ball_possesion_exact' : 5, 'pressing_exact' : 8
+
+	
+};
+
+var Manchester_United = {
+	'Ronaldo': 7.1,
+	'Sancho': 6.7,
+	'Greenwood': 6.9,
+	'Fernandes':7.1,
+	'Fred': 6.8,
+	'McTominay':6.8,
+	'Shaw': 6.6,
+	'Maguarer':6.6,
+	'Lindelef': 6.5,
+	'Wan-Bissaka': 6.9,
+	'De Gea': 6.5,
+	'counter_attack_exact' : 1, 'long_short_shot_exact' : 4 , 'pace_exact' : 7, 'long_short_pass_exact' : 4, 'ball_possesion_exact' : 8, 'pressing_exact' : 9
+
+	
+};
+
+var Tottenham = {
+	'Kane': 7.7,
+	'Son Hon Min': 7.6,
+	'Kulusevski': 7.6,
+	'Reguilon':7,
+	'Heberg': 7,
+	'Bentancur':7.2,
+	'Royal': 7.1,
+	'Dier':6.8,
+	'Sanchez': 7.1,
+	'Davis': 6.9,
+	'Loris': 6.8,
+	'counter_attack_exact' : 1, 'long_short_shot_exact' : 4 , 'pace_exact' : 5, 'long_short_pass_exact' : 4, 'ball_possesion_exact' : 6, 'pressing_exact' : 6
+
+	
 };
 /*Возможные команды соперника*/
 
@@ -173,7 +258,8 @@ function start(){
 	if (numb == 1){ // если 1, то оппонент выбирается впервые
 	var opponent_team = document.getElementById("Opponent_team");
     var opponent = opponent_team.value;
-	
+	document.getElementById("scored").innerHTML = 'Наша команда ' + our_score + ':' + opponent_score + ' ' + opponent;
+
 	opponent_rating = calc_rate(opponent);
 	console.log(eval(opponent)['counter_attack_exact']);
 	
