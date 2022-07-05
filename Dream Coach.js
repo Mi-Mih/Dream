@@ -72,7 +72,7 @@ var Liverpool = {
 	'Matip':7.35,
 	'Trent-Aleksandr-Arnold': 7.51,
 	'Alisson': 6.87,
-	'counter_attack_exact' : 0, 'long_short_shot_exact' : 3 , 'pace_exact' : 7, 'long_short_pass_exact' : 4, 'ball_possesion_exact' : 6, 'pressing_exact' : 8
+	'counter_attack_exact' : 1, 'long_short_shot_exact' : 4 , 'pace_exact' : 7, 'long_short_pass_exact' : 7, 'ball_possesion_exact' : 6, 'pressing_exact' : 8
 
 };
 
@@ -88,8 +88,7 @@ var Arsenal = {
 	'White':6.6,
 	'Soares': 6.7,
 	'Ramsdale': 6.3,
-	'counter_attack_exact' : 0, 'long_short_shot_exact' : 6 , 'pace_exact' : 6, 'long_short_pass_exact' : 7, 'ball_possesion_exact' : 7, 'pressing_exact' : 7
-
+	'counter_attack_exact' : 0, 'long_short_shot_exact' : 7 , 'pace_exact' : 6, 'long_short_pass_exact' : 8, 'ball_possesion_exact' : 7, 'pressing_exact' : 7
 	
 };
 
@@ -105,7 +104,7 @@ var Chelsea = {
 	'Rudiger': 7.2,
 	'James': 7.7,
 	'Mendy': 6.7,
-	'counter_attack_exact' : 1, 'long_short_shot_exact' : 4 , 'pace_exact' : 7, 'long_short_pass_exact' : 4, 'ball_possesion_exact' : 7, 'pressing_exact' : 7
+	'counter_attack_exact' : 0, 'long_short_shot_exact' : 4 , 'pace_exact' : 7, 'long_short_pass_exact' : 4, 'ball_possesion_exact' : 7, 'pressing_exact' : 7
 
 	
 };
@@ -122,7 +121,7 @@ var Manchester_City = {
 	'Dias': 7.1,
 	'Cancelo': 7.7,
 	'Ederson': 6.8,
-	'counter_attack_exact' : 1, 'long_short_shot_exact' : 3 , 'pace_exact' : 8, 'long_short_pass_exact' : 7, 'ball_possesion_exact' : 5, 'pressing_exact' : 8
+	'counter_attack_exact' : 1, 'long_short_shot_exact' : 5 , 'pace_exact' : 8, 'long_short_pass_exact' : 8, 'ball_possesion_exact' : 5, 'pressing_exact' : 5
 
 	
 };
@@ -139,7 +138,7 @@ var Manchester_United = {
 	'Lindelef': 6.5,
 	'Wan-Bissaka': 6.9,
 	'De Gea': 6.5,
-	'counter_attack_exact' : 1, 'long_short_shot_exact' : 4 , 'pace_exact' : 7, 'long_short_pass_exact' : 4, 'ball_possesion_exact' : 8, 'pressing_exact' : 9
+	'counter_attack_exact' : 1, 'long_short_shot_exact' : 5 , 'pace_exact' : 7, 'long_short_pass_exact' : 4, 'ball_possesion_exact' : 7, 'pressing_exact' : 9
 
 	
 };
@@ -156,7 +155,7 @@ var Tottenham = {
 	'Sanchez': 7.1,
 	'Davis': 6.9,
 	'Loris': 6.8,
-	'counter_attack_exact' : 1, 'long_short_shot_exact' : 4 , 'pace_exact' : 5, 'long_short_pass_exact' : 4, 'ball_possesion_exact' : 6, 'pressing_exact' : 6
+	'counter_attack_exact' : 0, 'long_short_shot_exact' : 4 , 'pace_exact' : 5, 'long_short_pass_exact' : 4, 'ball_possesion_exact' : 6, 'pressing_exact' : 7
 
 	
 };
@@ -206,15 +205,19 @@ function test_team(counter_attack_exact, long_short_shot_exact, pace_exact, long
 }
 /*функция с параметрами команды соперника*/
 var numb = 0; // костыль, чтоб нельзя было менять оппонента по ходу матча
-
+var opponent_team;
+var opponent;
 /*функция сравнения параметров введённых пользователем и эталонных*/
 function compare(){
+	 document.getElementById("time").innerHTML = Math.ceil((t*3)/8)+ ' минута';
 	console.log('время '+t);
 	if (t == 0){
 	    array = [];
 	}
 	console.log(array);
     if(t == 241){
+		document.getElementById("time").innerHTML = 'Матч завершён!';
+
 		our_score = 0;
 		array = [];
 		t = 0;
@@ -225,8 +228,8 @@ function compare(){
 	else if(t % 30 != 0){
 		 //let exact_arr = test_team();
 	     let num_arr = 	[Number(counter_attack), Number(long_short_shot), Number(pace),Number(long_short_pass),Number(ball_possesion),Number(pressing)];
-		 let error = [(0.7 - level+ ((our_rating - opponent_rating)/100)),(0.6 - level + ((our_rating - opponent_rating)/100)),(0.5 - level + ((our_rating - opponent_rating)/100)),
-		 (0.4 - level + ((our_rating - opponent_rating)/100)),(0.3 - level + ((our_rating - opponent_rating)/100)),(0.3 - level + ((our_rating - opponent_rating)/100))];
+		 let error = [(0.5 - level+ ((our_rating - opponent_rating)/50)),(0.5 - level + ((our_rating - opponent_rating)/50)),(0.4 - level + ((our_rating - opponent_rating)/50)),
+		 (0.4 - level + ((our_rating - opponent_rating)/50)),(0.3 - level + ((our_rating - opponent_rating)/50)),(0.2 - level + ((our_rating - opponent_rating)/50))];
 		 for (var i = 0; i < error.length; i++) {
               if ((Math.abs(exact_arr[i] - num_arr[i]) / exact_arr[i]) < error[i] ){
 				  array.push(3)
@@ -241,7 +244,8 @@ function compare(){
 		if (rand == 1 ){
 			console.log("Пропускаем");
 			opponent_score = opponent_score + 1;
-			document.getElementById("scored").innerHTML ='Наша команда ' + our_score + ':' + opponent_score + ' Команда противника';
+
+			document.getElementById("scored").innerHTML ='Наша команда ' + our_score + ':' + opponent_score + ' ' + opponent;
 		}
 		else if(rand == 2){
 		    console.log("Ничего не произошло");
@@ -249,18 +253,19 @@ function compare(){
 		else if (rand == 3){
 		    console.log("Забиваем");
 			our_score = our_score + 1;
-			document.getElementById("scored").innerHTML = 'Наша команда ' + our_score + ':' + opponent_score + ' Команда противника';
+			document.getElementById("scored").innerHTML = 'Наша команда ' + our_score + ':' + opponent_score + ' ' + opponent;
 		}
 	}
     t++;
+
 }
 /*функция сравнения параметров введённых пользователем и эталонных*/
 /*функция запуска матча*/
 function start(){
     numb++;
 	if (numb == 1){ // если 1, то оппонент выбирается впервые
-	var opponent_team = document.getElementById("Opponent_team");
-    var opponent = opponent_team.value;
+	opponent_team = document.getElementById("Opponent_team");
+    opponent = opponent_team.value;
 	document.getElementById("scored").innerHTML = 'Наша команда ' + our_score + ':' + opponent_score + ' ' + opponent;
 
 	opponent_rating = calc_rate(opponent);
