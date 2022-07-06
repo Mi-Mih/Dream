@@ -89,6 +89,7 @@ var Arsenal = {
 	'Soares': 6.7,
 	'Ramsdale': 6.3,
 	'counter_attack_exact' : 0, 'long_short_shot_exact' : 7 , 'pace_exact' : 6, 'long_short_pass_exact' : 8, 'ball_possesion_exact' : 7, 'pressing_exact' : 7
+
 	
 };
 
