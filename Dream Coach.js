@@ -61,6 +61,7 @@ function  average(arr)
 
 /*Возможные команды соперника*/
 var Liverpool = {
+	'points': 0,
     'Salah': 7.7 ,
 	'Mane': 7.29,
 	'Jota': 7.3,
@@ -77,6 +78,7 @@ var Liverpool = {
 };
 
 var Arsenal = {
+	'points': 0,
 	'Saka': 7.2,
 	'Martinelli': 7.1,
 	'Nketiah': 6.60,
@@ -94,6 +96,7 @@ var Arsenal = {
 };
 
 var Chelsea = {
+	'points': 0,
 	'Werner': 6.81,
 	'Havertz': 7.5,
 	'Mount': 7.6,
@@ -111,6 +114,7 @@ var Chelsea = {
 };
 
 var Manchester_City = {
+	'points': 0,
 	'Jesus': 7.8,
 	'Grealish': 7.9,
 	'Mahrez': 8,
@@ -128,6 +132,7 @@ var Manchester_City = {
 };
 
 var Manchester_United = {
+	'points': 0,
 	'Ronaldo': 7.1,
 	'Sancho': 6.7,
 	'Greenwood': 6.9,
@@ -145,6 +150,7 @@ var Manchester_United = {
 };
 
 var Tottenham = {
+	'points': 0,
 	'Kane': 7.7,
 	'Son Hon Min': 7.6,
 	'Kulusevski': 7.6,
@@ -164,6 +170,7 @@ var Tottenham = {
 
 /*Наша команда*/
 var Based = {
+	'points': 0,
     'Felino': 5.4,
 	'Boba': 5.8,
 	'MM': 6.85,
@@ -179,6 +186,17 @@ var Based = {
 
 };
 /*Наша команда*/
+
+var Progress = {
+	'Arsenal':0,
+	'Tottenham':0,
+	'Manchester_City':0,
+	'Manchester_United':0,
+	'Chelsea':0,
+	'Based':0,
+	'Liverpool':0,
+};
+
 
 /*функция расчёта рейтинга команды*/
 function calc_rate(name){
@@ -198,7 +216,7 @@ function calc_rate(name){
 
 var our_rating = calc_rate(Based); //рейтинг нашей команды 0-10
 var opponent_rating;//рейтинг команды соперника 0-10
-var exact_arr;
+var exact_arr; //массив с параметрами соперника
 
 /*функция с параметрами команды соперника*/
 function test_team(counter_attack_exact, long_short_shot_exact, pace_exact, long_short_pass_exact, ball_possesion_exact, pressing_exact){
@@ -206,8 +224,35 @@ function test_team(counter_attack_exact, long_short_shot_exact, pace_exact, long
 }
 /*функция с параметрами команды соперника*/
 var numb = 0; // костыль, чтоб нельзя было менять оппонента по ходу матча
-var opponent_team;
+var opponent_team; 
 var opponent;
+
+/*Функция обновления очков команды*/
+function edit_table(name, point){
+		  Progress[name] = Progress[name] + point;
+}
+/*Функция обновления очков команды*/
+
+/*Функция сортировки команд по набранным очкам и обновления таблицы*/
+function sort_table(input_dict){
+	//сортировка словаря -> массив пар команда - очки
+var items = Object.keys(input_dict).map(function(key) {
+  return [key, input_dict[key]];
+});
+items.sort(function(first, second) {
+  return second[1] - first[1];
+});
+let serial = ['first','second','third','four','five','six','seven']; //id названий команд
+let serial_point = ['first_point','second_point','third_point','four_point','five_point','six_point','seven_point']; //id очков команд
+// заполнение турнирной таблицы
+for(var j = 0; j < serial.length; j++) {
+	 document.getElementById(serial[j]).innerHTML = items[j][0].replace("_", " ");
+	 document.getElementById(serial_point[j]).innerHTML = items[j][1];
+ }
+};
+/*Функция сортировки команд по набранным очкам и обновления таблицы*/
+
+
 /*функция сравнения параметров введённых пользователем и эталонных*/
 function compare(){
 	 document.getElementById("time").innerHTML = Math.ceil((t*3)/8)+ ' минута';
@@ -218,7 +263,10 @@ function compare(){
 	console.log(array);
     if(t == 241){
 		document.getElementById("time").innerHTML = 'Матч завершён!';
-
+		if (opponent_score > our_score){edit_table(opponent,3); edit_table('Based',0);}
+		else if(opponent_score == our_score){edit_table(opponent,1);  edit_table('Based',1)}
+		else if(opponent_score < our_score){edit_table(opponent,0);  edit_table('Based',3);}
+		sort_table(Progress);
 		our_score = 0;
 		array = [];
 		t = 0;
@@ -227,7 +275,6 @@ function compare(){
 		clearInterval(id);
 	}
 	else if(t % 30 != 0){
-		 //let exact_arr = test_team();
 	     let num_arr = 	[Number(counter_attack), Number(long_short_shot), Number(pace),Number(long_short_pass),Number(ball_possesion),Number(pressing)];
 		 let error = [(0.5 - level+ ((our_rating - opponent_rating)/50)),(0.5 - level + ((our_rating - opponent_rating)/50)),(0.4 - level + ((our_rating - opponent_rating)/50)),
 		 (0.4 - level + ((our_rating - opponent_rating)/50)),(0.3 - level + ((our_rating - opponent_rating)/50)),(0.2 - level + ((our_rating - opponent_rating)/50))];
@@ -235,7 +282,7 @@ function compare(){
               if ((Math.abs(exact_arr[i] - num_arr[i]) / exact_arr[i]) < error[i] ){
 				  array.push(3)
 			  }
-			  else if ((Math.abs(exact_arr[i] - num_arr[i]) / exact_arr[i]) <= (error[i] + 0.3) && (Math.abs(exact_arr[i] - num_arr[i]) / exact_arr[i]) >= (error[i] - 0.3) ){array.push(2);}
+			  else if ((Math.abs(exact_arr[i] - num_arr[i]) / exact_arr[i]) <= (error[i] + 0.2)){array.push(2);}
 			  else{array.push(1);}
          }		 
 	}
@@ -246,7 +293,7 @@ function compare(){
 			console.log("Пропускаем");
 			opponent_score = opponent_score + 1;
 
-			document.getElementById("scored").innerHTML ='Наша команда ' + our_score + ':' + opponent_score + ' ' + opponent;
+			document.getElementById("scored").innerHTML ='Наша команда ' + our_score + ':' + opponent_score + ' ' + opponent.replace("_", " ");
 		}
 		else if(rand == 2){
 		    console.log("Ничего не произошло");
@@ -254,7 +301,7 @@ function compare(){
 		else if (rand == 3){
 		    console.log("Забиваем");
 			our_score = our_score + 1;
-			document.getElementById("scored").innerHTML = 'Наша команда ' + our_score + ':' + opponent_score + ' ' + opponent;
+			document.getElementById("scored").innerHTML = 'Наша команда ' + our_score + ':' + opponent_score + ' ' + opponent.replace("_", " ");
 		}
 	}
     t++;
@@ -267,7 +314,7 @@ function start(){
 	if (numb == 1){ // если 1, то оппонент выбирается впервые
 	opponent_team = document.getElementById("Opponent_team");
     opponent = opponent_team.value;
-	document.getElementById("scored").innerHTML = 'Наша команда ' + our_score + ':' + opponent_score + ' ' + opponent;
+	document.getElementById("scored").innerHTML = 'Наша команда ' + our_score + ':' + opponent_score + ' ' + opponent.replace("_", " ");
 
 	opponent_rating = calc_rate(opponent);
 	console.log(eval(opponent)['counter_attack_exact']);
