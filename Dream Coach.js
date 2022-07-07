@@ -169,7 +169,7 @@ var Tottenham = {
 /*Возможные команды соперника*/
 
 /*Наша команда*/
-var Based = {
+var You = {
 	'points': 0,
     'Felino': 5.4,
 	'Boba': 5.8,
@@ -193,7 +193,7 @@ var Progress = {
 	'Manchester_City':0,
 	'Manchester_United':0,
 	'Chelsea':0,
-	'Based':0,
+	'You':0,
 	'Liverpool':0,
 };
 
@@ -214,7 +214,7 @@ function calc_rate(name){
 /*функция расчёта рейтинга команды*/
 
 
-var our_rating = calc_rate(Based); //рейтинг нашей команды 0-10
+var our_rating = calc_rate(You); //рейтинг нашей команды 0-10
 var opponent_rating;//рейтинг команды соперника 0-10
 var exact_arr; //массив с параметрами соперника
 
@@ -263,9 +263,9 @@ function compare(){
 	console.log(array);
     if(t == 241){
 		document.getElementById("time").innerHTML = 'Матч завершён!';
-		if (opponent_score > our_score){edit_table(opponent,3); edit_table('Based',0);}
-		else if(opponent_score == our_score){edit_table(opponent,1);  edit_table('Based',1)}
-		else if(opponent_score < our_score){edit_table(opponent,0);  edit_table('Based',3);}
+		if (opponent_score > our_score){edit_table(opponent,3); edit_table('You',0);}
+		else if(opponent_score == our_score){edit_table(opponent,1);  edit_table('You',1)}
+		else if(opponent_score < our_score){edit_table(opponent,0);  edit_table('You',3);}
 		sort_table(Progress);
 		our_score = 0;
 		array = [];
