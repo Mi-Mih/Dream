@@ -334,6 +334,9 @@ else { //иначе оппонент уже выбран
 function stop(){
 	numb = 0; // сброс оппонента
 	clearInterval(id);
+	edit_table(opponent,3); 
+	edit_table('You',0);
+	sort_table(Progress);
 	console.log('Техническое поражение');
 	t=0;
 	array = [];
