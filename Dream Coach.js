@@ -11,7 +11,8 @@ var level = 0.1; //уровень сложности
 var our_score = 0; // забитые мячи нашей команды
 var opponent_score = 0; // забитые мячи команды соперника
 var tour = 0; // номер тура
-var calendar = [];
+var calendar = ['Arsenal','Manchester_City','Manchester_United','Chelsea','Liverpool'];
+var team_list = ['Arsenal','Manchester_City','Manchester_United','Chelsea','Liverpool'];
 /* считывание значения параметров с ползунков */
 document.getElementById('difficulty level').oninput = function(){
 	 level= this.value;
@@ -149,7 +150,7 @@ var Manchester_United = {
 
 	
 };
-
+/*
 var Tottenham = {
 	'points': 0,
 	'Kane': 7.7,
@@ -167,6 +168,7 @@ var Tottenham = {
 
 	
 };
+*/
 /*Возможные команды соперника*/
 
 /*Наша команда*/
@@ -191,32 +193,21 @@ var You = {
 var Progress = {
 	'You':0,
 	'Arsenal':0,
-	'Tottenham':0,
+	//'Tottenham':0,
 	'Manchester_City':0,
 	'Manchester_United':0,
 	'Chelsea':0,
 	'Liverpool':0,
 };
 
-/* функция составления пар */
-function create_combinations(array) {
-  return array.reduce((a, b) =>
-    a.map(x => b.map(y => x.concat(y)))
-    .reduce((a, b) => a.concat(b), []), [[]]);
-}
-/* функция составления пар */
 
 /* функция составление итогового календаря */
-function create_calendar(){
-	let team_list = [Object.keys(Progress),Object.keys(Progress)];
-	let yy = create_combinations(team_list);
-	for (var i=0; i<yy.length;i++){
-    if(yy[i][0]!=yy[i][1]){
-        calendar.push(yy[i]);
-    }
-}
+function create_calendar() {
+  calendar.sort(() => Math.random() - 0.5);
+  document.getElementById("start_season").disabled = true; 
 }
 /* функция составление итогового календаря */
+
 
 
 /*функция расчёта рейтинга команды*/
@@ -263,8 +254,8 @@ var items = Object.keys(input_dict).map(function(key) {
 items.sort(function(first, second) {
   return second[1] - first[1];
 });
-let serial = ['first','second','third','four','five','six','seven']; //id названий команд
-let serial_point = ['first_point','second_point','third_point','four_point','five_point','six_point','seven_point']; //id очков команд
+let serial = ['first','second','third','four','five','six']; //id названий команд
+let serial_point = ['first_point','second_point','third_point','four_point','five_point','six_point']; //id очков команд
 // заполнение турнирной таблицы
 for(var j = 0; j < serial.length; j++) {
 	 document.getElementById(serial[j]).innerHTML = items[j][0].replace("_", " ");
@@ -272,6 +263,23 @@ for(var j = 0; j < serial.length; j++) {
  }
 };
 /*Функция сортировки команд по набранным очкам и обновления таблицы*/
+
+/*функция распределения очков между соперниками*/
+function create_combinations() {
+  team_list.sort(() => Math.random() - 0.5);
+  let ki =0;
+  while (ki <  team_list.length-2) { 
+  if(team_list[ki] == opponent){continue;}
+	  let rand = getRandomArrayElement([0,1,3]);
+	  Progress[team_list[ki+1]] = Progress[team_list[ki+1]] + (3 - rand) ;
+	  Progress[team_list[ki]] = Progress[team_list[ki]] + rand;
+
+   ki = ki +2;
+}
+  	  console.log(Progress);
+
+}
+/*функция распределения очков между соперниками*/
 
 
 /*функция сравнения параметров введённых пользователем и эталонных*/
@@ -284,6 +292,7 @@ function compare(){
 	console.log(array);
     if(t == 241){
 		tour++;
+		create_combinations();
 		document.getElementById("time").innerHTML = 'Матч завершён!';
 		if (opponent_score > our_score){edit_table(opponent,3); edit_table('You',0);}
 		else if(opponent_score == our_score){edit_table(opponent,1);  edit_table('You',1)}
@@ -332,7 +341,7 @@ function compare(){
 /*функция сравнения параметров введённых пользователем и эталонных*/
 /*функция запуска матча*/
 function start(){
-	if (tour == 5){
+	if (tour == 4){
 		document.getElementById("start_game").disabled = true; 
 		document.getElementById("start_season").disabled = true; 
 }
@@ -342,7 +351,7 @@ function start(){
 	//opponent_team = document.getElementById("Opponent_team");
     //opponent = opponent_team.value;
 	
-	opponent = calendar[tour][1];
+	opponent = calendar[tour];
 	document.getElementById("scored").innerHTML = 'You ' + our_score + ':' + opponent_score + ' ' + opponent.replace("_", " ");
 
 	opponent_rating = calc_rate(opponent);
@@ -360,13 +369,14 @@ function start(){
 /*функция завершения матча*/
 function stop(){
 		tour++;
-	if (tour == 6){
+	if (tour == 5){
 		document.getElementById("pause_game").disabled = true; 
 		document.getElementById("stop_game").disabled = true; 
-		document.getElementById("time").innerHTML = '';
+		document.getElementById("time").innerHTML = 'Сезон завершён!';
 
 }
 	if (numb > 0 ){ // если 1, то оппонент выбирается впервые
+	create_combinations();
 	numb = 0; // сброс оппонента
 	clearInterval(id);
 	edit_table(opponent,3); 
