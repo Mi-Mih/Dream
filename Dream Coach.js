@@ -10,7 +10,8 @@ var id; // таймер
 var level = 0.1; //уровень сложности
 var our_score = 0; // забитые мячи нашей команды
 var opponent_score = 0; // забитые мячи команды соперника
-
+var tour = 0; // номер тура
+var calendar = [];
 /* считывание значения параметров с ползунков */
 document.getElementById('difficulty level').oninput = function(){
 	 level= this.value;
@@ -188,14 +189,34 @@ var You = {
 /*Наша команда*/
 
 var Progress = {
+	'You':0,
 	'Arsenal':0,
 	'Tottenham':0,
 	'Manchester_City':0,
 	'Manchester_United':0,
 	'Chelsea':0,
-	'You':0,
 	'Liverpool':0,
 };
+
+/* функция составления пар */
+function create_combinations(array) {
+  return array.reduce((a, b) =>
+    a.map(x => b.map(y => x.concat(y)))
+    .reduce((a, b) => a.concat(b), []), [[]]);
+}
+/* функция составления пар */
+
+/* функция составление итогового календаря */
+function create_calendar(){
+	let team_list = [Object.keys(Progress),Object.keys(Progress)];
+	let yy = create_combinations(team_list);
+	for (var i=0; i<yy.length;i++){
+    if(yy[i][0]!=yy[i][1]){
+        calendar.push(yy[i]);
+    }
+}
+}
+/* функция составление итогового календаря */
 
 
 /*функция расчёта рейтинга команды*/
@@ -262,6 +283,7 @@ function compare(){
 	}
 	console.log(array);
     if(t == 241){
+		tour++;
 		document.getElementById("time").innerHTML = 'Матч завершён!';
 		if (opponent_score > our_score){edit_table(opponent,3); edit_table('You',0);}
 		else if(opponent_score == our_score){edit_table(opponent,1);  edit_table('You',1)}
@@ -310,10 +332,17 @@ function compare(){
 /*функция сравнения параметров введённых пользователем и эталонных*/
 /*функция запуска матча*/
 function start(){
+	if (tour == 5){
+		document.getElementById("start_game").disabled = true; 
+		document.getElementById("start_season").disabled = true; 
+}
+
     numb++;
 	if (numb == 1){ // если 1, то оппонент выбирается впервые
-	opponent_team = document.getElementById("Opponent_team");
-    opponent = opponent_team.value;
+	//opponent_team = document.getElementById("Opponent_team");
+    //opponent = opponent_team.value;
+	
+	opponent = calendar[tour][1];
 	document.getElementById("scored").innerHTML = 'You ' + our_score + ':' + opponent_score + ' ' + opponent.replace("_", " ");
 
 	opponent_rating = calc_rate(opponent);
@@ -323,16 +352,21 @@ function start(){
 	eval(opponent)['long_short_pass_exact'], eval(opponent)['ball_possesion_exact'], eval(opponent)['pressing_exact']);
 	id = setInterval(compare, 1000);
 	}
-else { //иначе оппонент уже выбран
-	id = setInterval(compare, 1000);
-}
+
 	
 }
 /*функция запуска матча*/
 
 /*функция завершения матча*/
 function stop(){
-	if (numb == 1){ 
+		tour++;
+	if (tour == 6){
+		document.getElementById("pause_game").disabled = true; 
+		document.getElementById("stop_game").disabled = true; 
+		document.getElementById("time").innerHTML = '';
+
+}
+	if (numb > 0 ){ // если 1, то оппонент выбирается впервые
 	numb = 0; // сброс оппонента
 	clearInterval(id);
 	edit_table(opponent,3); 
