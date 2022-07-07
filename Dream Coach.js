@@ -332,6 +332,7 @@ else { //иначе оппонент уже выбран
 
 /*функция завершения матча*/
 function stop(){
+	if (numb == 1){ 
 	numb = 0; // сброс оппонента
 	clearInterval(id);
 	edit_table(opponent,3); 
@@ -340,6 +341,7 @@ function stop(){
 	console.log('Техническое поражение');
 	t=0;
 	array = [];
+	}
 }
 /*функция завершения матча*/
 
