@@ -293,7 +293,7 @@ function compare(){
 			console.log("Пропускаем");
 			opponent_score = opponent_score + 1;
 
-			document.getElementById("scored").innerHTML ='Наша команда ' + our_score + ':' + opponent_score + ' ' + opponent.replace("_", " ");
+			document.getElementById("scored").innerHTML ='You ' + our_score + ':' + opponent_score + ' ' + opponent.replace("_", " ");
 		}
 		else if(rand == 2){
 		    console.log("Ничего не произошло");
@@ -301,7 +301,7 @@ function compare(){
 		else if (rand == 3){
 		    console.log("Забиваем");
 			our_score = our_score + 1;
-			document.getElementById("scored").innerHTML = 'Наша команда ' + our_score + ':' + opponent_score + ' ' + opponent.replace("_", " ");
+			document.getElementById("scored").innerHTML = 'You ' + our_score + ':' + opponent_score + ' ' + opponent.replace("_", " ");
 		}
 	}
     t++;
@@ -314,7 +314,7 @@ function start(){
 	if (numb == 1){ // если 1, то оппонент выбирается впервые
 	opponent_team = document.getElementById("Opponent_team");
     opponent = opponent_team.value;
-	document.getElementById("scored").innerHTML = 'Наша команда ' + our_score + ':' + opponent_score + ' ' + opponent.replace("_", " ");
+	document.getElementById("scored").innerHTML = 'You ' + our_score + ':' + opponent_score + ' ' + opponent.replace("_", " ");
 
 	opponent_rating = calc_rate(opponent);
 	console.log(eval(opponent)['counter_attack_exact']);
