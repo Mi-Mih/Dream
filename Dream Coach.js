@@ -267,16 +267,23 @@ for(var j = 0; j < serial.length; j++) {
 /*функция распределения очков между соперниками*/
 function create_combinations() {
   team_list.sort(() => Math.random() - 0.5);
-  let ki =0;
-  while (ki <  team_list.length-2) { 
-  if(team_list[ki] == opponent){continue;}
-	  let rand = getRandomArrayElement([0,1,3]);
-	  Progress[team_list[ki+1]] = Progress[team_list[ki+1]] + (3 - rand) ;
-	  Progress[team_list[ki]] = Progress[team_list[ki]] + rand;
+  let dd = [];
+  for(var ki = 0; ki < team_list.length; ki++) {
+	  if (team_list[ki]==opponent){continue;}
+	  dd.push(team_list[ki]);
+  }
+  
+for(var ki = 0; ki < dd.length; ki=ki+2) {
+	let rand = getRandomArrayElement([0,1,3]);
+	Progress[dd[ki]] = Progress[dd[ki]] + rand;
+	if (rand == 1){	Progress[dd[ki+1]] = Progress[dd[ki+1]] + 1;}
+	else{
+	Progress[dd[ki+1]] = Progress[dd[ki+1]] + (3 - rand);
+	}
 
-   ki = ki +2;
+
 }
-  	  console.log(Progress);
+  	  //console.log(Progress);
 
 }
 /*функция распределения очков между соперниками*/
