@@ -204,11 +204,11 @@ var Progress = {
 /* функция составление итогового календаря */
 function create_calendar() {
   calendar.sort(() => Math.random() - 0.5);
-  document.getElementById("start_season").disabled = true; 
 }
 /* функция составление итогового календаря */
 
-
+alert('Are you ready start season?');
+create_calendar();
 
 /*функция расчёта рейтинга команды*/
 function calc_rate(name){
@@ -350,7 +350,7 @@ function compare(){
 function start(){
 	if (tour == 4){
 		document.getElementById("start_game").disabled = true; 
-		document.getElementById("start_season").disabled = true; 
+		//document.getElementById("start_season").disabled = true; 
 }
 
     numb++;
