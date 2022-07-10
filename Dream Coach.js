@@ -352,7 +352,7 @@ function compare(){
 /*функция сравнения параметров введённых пользователем и эталонных*/
 /*функция запуска матча*/
 function start(){
-	if (tour == 4){
+	if (tour == team_list.length - 1 ){
 		document.getElementById("start_game").disabled = true; 
 		//document.getElementById("start_season").disabled = true; 
 }
@@ -380,7 +380,7 @@ function start(){
 /*функция завершения матча*/
 function stop(){
 		tour++;
-	if (tour == 5){
+	if (tour == team_list.length){
 		document.getElementById("pause_game").disabled = true; 
 		document.getElementById("stop_game").disabled = true; 
 		document.getElementById("time").innerHTML = 'Сезон завершён!';
@@ -405,4 +405,5 @@ function on_pause(){
 	clearInterval(id);
 }
 /*функция остановки матча*/
+
 
