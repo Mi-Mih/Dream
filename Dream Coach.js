@@ -299,6 +299,10 @@ function compare(){
 	console.log(array);
     if(t == 241){
 		tour++;
+		if (tour==5){
+		document.getElementById("pause_game").disabled = true; 
+		document.getElementById("stop_game").disabled = true;
+		}
 		create_combinations();
 		document.getElementById("time").innerHTML = 'Матч завершён!';
 		if (opponent_score > our_score){edit_table(opponent,3); edit_table('You',0);}
