@@ -11,8 +11,9 @@ var level = 0.1; //уровень сложности
 var our_score = 0; // забитые мячи нашей команды
 var opponent_score = 0; // забитые мячи команды соперника
 var tour = 0; // номер тура
-var calendar = ['Arsenal','Manchester_City','Manchester_United','Chelsea','Liverpool'];
-var team_list = ['Arsenal','Manchester_City','Manchester_United','Chelsea','Liverpool'];
+var calendar = ['Arsenal','Manchester_City','Manchester_United','Chelsea','Liverpool']; // календарь
+var team_list = ['Arsenal','Manchester_City','Manchester_United','Chelsea','Liverpool']; //список команд для формирования их очков
+var rand_minute_arr = [];
 /* считывание значения параметров с ползунков */
 document.getElementById('difficulty level').oninput = function(){
 	 level= this.value;
@@ -60,6 +61,22 @@ function  average(arr)
     return sum / arr.length;
 }
 /*функция расчёта среднего значения*/
+
+/*функция создания рандомных минут*/
+function rand_minute(){
+	rand_minute_arr=[];
+let start_arr = [];
+for (var i = 1; i <= 90; i++) {
+   start_arr.push(i);
+}
+let num_min = getRandomArrayElement([0,1,2,3,4]);
+for (var i = 1; i <= num_min; i++) {
+	rand_minute_arr.push(getRandomArrayElement(start_arr));
+}
+console.log(rand_minute_arr);
+}
+/*функция создания рандомных минут*/
+
 
 /*Возможные команды соперника*/
 var Liverpool = {
@@ -204,6 +221,9 @@ var Progress = {
 /* функция составление итогового календаря */
 function create_calendar() {
   calendar.sort(() => Math.random() - 0.5);
+  for(var y = 0; y < calendar.length; y++) {
+  document.getElementById("c_" + (y + 1)).innerHTML = 'You : ' + calendar[y];
+  }
 }
 /* функция составление итогового календаря */
 
@@ -291,14 +311,34 @@ for(var ki = 0; ki < dd.length; ki=ki+2) {
 
 /*функция сравнения параметров введённых пользователем и эталонных*/
 function compare(){
-	 document.getElementById("time").innerHTML = Math.ceil((t*3)/8)+ ' минута';
-	console.log('время '+t);
+	document.getElementById("time").innerHTML = Math.ceil((t*3)/8)+ ' минута';
+	console.log('время ' + t);
+	
+	if(rand_minute_arr.includes(Math.ceil((t*3)/8))==true){
+		let rand = getRandomArrayElement(array);
+		array = [];
+		if (rand == 1 ){
+			console.log("Пропускаем");
+			opponent_score = opponent_score + 1;
+
+			document.getElementById("scored").innerHTML ='You ' + our_score + ':' + opponent_score + ' ' + opponent.replace("_", " ");
+		}
+		else if(rand == 2){
+		    console.log("Ничего не произошло");
+		}
+		else if (rand == 3){
+		    console.log("Забиваем");
+			our_score = our_score + 1;
+			document.getElementById("scored").innerHTML = 'You ' + our_score + ':' + opponent_score + ' ' + opponent.replace("_", " ");
+		}
+	};
 	if (t == 0){
 	    array = [];
 	}
 	console.log(array);
     if(t == 241){
 		tour++;
+		document.getElementById("tur").innerHTML = tour + 1 + ' тур';
 		if (tour==5){
 		document.getElementById("pause_game").disabled = true; 
 		document.getElementById("stop_game").disabled = true;
@@ -361,7 +401,7 @@ function start(){
 	if (numb == 1){ // если 1, то оппонент выбирается впервые
 	//opponent_team = document.getElementById("Opponent_team");
     //opponent = opponent_team.value;
-	
+	rand_minute();
 	opponent = calendar[tour];
 	document.getElementById("scored").innerHTML = 'You ' + our_score + ':' + opponent_score + ' ' + opponent.replace("_", " ");
 
@@ -372,6 +412,10 @@ function start(){
 	eval(opponent)['long_short_pass_exact'], eval(opponent)['ball_possesion_exact'], eval(opponent)['pressing_exact']);
 	id = setInterval(compare, 1000);
 	}
+	else{
+			id = setInterval(compare, 1000);
+
+	}
 
 	
 }
@@ -379,14 +423,9 @@ function start(){
 
 /*функция завершения матча*/
 function stop(){
-		tour++;
-	if (tour == team_list.length){
-		document.getElementById("pause_game").disabled = true; 
-		document.getElementById("stop_game").disabled = true; 
-		document.getElementById("time").innerHTML = 'Сезон завершён!';
-
-}
 	if (numb > 0 ){ // если 1, то оппонент выбирается впервые
+	tour++;
+    document.getElementById("tur").innerHTML = tour + 1 + ' тур';
 	create_combinations();
 	numb = 0; // сброс оппонента
 	clearInterval(id);
@@ -397,6 +436,15 @@ function stop(){
 	t=0;
 	array = [];
 	}
+		
+		
+	if (tour == team_list.length){
+		document.getElementById("pause_game").disabled = true; 
+		document.getElementById("stop_game").disabled = true; 
+		document.getElementById("time").innerHTML = 'Сезон завершён!';
+
+}
+	
 }
 /*функция завершения матча*/
 
@@ -405,5 +453,4 @@ function on_pause(){
 	clearInterval(id);
 }
 /*функция остановки матча*/
-
 
